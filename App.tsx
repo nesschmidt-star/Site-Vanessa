@@ -6,7 +6,6 @@ import AboutMe from './components/AboutMe';
 import Services from './components/Services';
 import Locations from './components/Locations';
 import BMICalculator from './components/BMICalculator';
-import NutritionChat from './components/NutritionChat';
 import WhatsAppButton from './components/WhatsAppButton';
 
 const App: React.FC = () => {
@@ -19,7 +18,6 @@ const App: React.FC = () => {
         <Services />
         <Locations />
         <BMICalculator />
-        <NutritionChat />
       </main>
       <WhatsAppButton />
       <footer className="bg-gray-900 text-white py-12">
@@ -53,9 +51,6 @@ const App: React.FC = () => {
                 <Instagram className="h-6 w-6" />
               </a>
             </div>
-            <p className="text-gray-400 text-sm mt-4">
-              As informações fornecidas pelo chat são para fins educacionais. Agende uma consulta para um plano completo.
-            </p>
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
