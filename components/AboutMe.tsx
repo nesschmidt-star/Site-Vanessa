@@ -104,16 +104,6 @@ const AboutMe: React.FC = () => {
                 </a>
               </div>
             </div>
-
-            {/* Botão de Forçar Atualização (Útil se a pessoa acabou de subir a foto) */}
-            <button 
-              onClick={() => setAttempts(a => a + 1)}
-              className="mt-4 flex items-center text-xs text-gray-400 hover:text-sky-600 transition-colors"
-              title="Clique aqui se você acabou de subir a foto"
-            >
-              <RefreshCw className={`h-3 w-3 mr-1 ${loading ? 'animate-spin' : ''}`} />
-              Atualizar foto
-            </button>
           </div>
 
           {/* Conteúdo de Texto */}

@@ -18,8 +18,8 @@ const Services: React.FC = () => {
       title: "Controle do Diabetes",
       subtitle: "Tipo 1, 2 e Gestacional",
       description: "Estratégias para controle glicêmico eficiente, prevenindo complicações e permitindo uma vida leve e saborosa.",
-      // Imagem atualizada e confiável de medidor de glicose/alimentação saudável
-      image: "https://images.unsplash.com/photo-1628294895950-98052523e036?q=80&w=2070&auto=format&fit=crop",
+      // Nova imagem de aparelho de glicemia (Glucometer) garantida
+      image: "https://images.unsplash.com/photo-1615486511484-92e172cc4fe0?auto=format&fit=crop&q=80&w=800",
     },
     {
       title: "Saúde da Tireoide",
