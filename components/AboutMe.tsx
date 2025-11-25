@@ -1,13 +1,62 @@
-import React, { useState } from 'react';
-import { Instagram, Globe, MapPin, UserRound } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Instagram, Globe, MapPin, UserRound, RefreshCw } from 'lucide-react';
 
 const AboutMe: React.FC = () => {
-  // Estado para controlar o erro da imagem
-  const [imgError, setImgError] = useState(false);
+  // Estado para controlar qual imagem exibir
+  const [currentImage, setCurrentImage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [attempts, setAttempts] = useState(0);
 
-  // Link direto para a imagem no GitHub (Raw)
-  // Adicionei ?v=1 para garantir que o navegador não use uma versão antiga (cache)
-  const profileImage = "https://raw.githubusercontent.com/nesschmidt-star/Site-Vanessa/main/vanessa.jpg?v=1";
+  // Lista de tentativas de nomes de arquivo (O código vai testar um por um)
+  const baseUrl = "https://raw.githubusercontent.com/nesschmidt-star/Site-Vanessa/main/";
+  const possibleNames = [
+    "vanessa.jpg",      // Padrão
+    "Vanessa.jpg",      // Com maiúscula
+    "vanessa.jpeg",     // Formato jpeg
+    "Vanessa.jpeg",     // Jpeg com maiúscula
+    "vanessa.png",      // Formato png
+    "vanessa.jpg.jpg",  // Erro comum do Windows
+    "foto.jpg"          // Nome genérico
+  ];
+
+  // Função que testa as imagens
+  const findImage = () => {
+    setLoading(true);
+    let found = false;
+    
+    // Adiciona timestamp para evitar cache (?t=...)
+    const timestamp = new Date().getTime();
+
+    // Tenta carregar a primeira imagem que funcionar
+    const tryNextImage = (index: number) => {
+      if (index >= possibleNames.length) {
+        setLoading(false); // Nenhuma funcionou
+        return;
+      }
+
+      const img = new Image();
+      const urlToTest = `${baseUrl}${possibleNames[index]}?t=${timestamp}`;
+      
+      img.onload = () => {
+        setCurrentImage(urlToTest);
+        setLoading(false);
+        found = true;
+      };
+
+      img.onerror = () => {
+        if (!found) tryNextImage(index + 1);
+      };
+
+      img.src = urlToTest;
+    };
+
+    tryNextImage(0);
+  };
+
+  // Tenta buscar a imagem assim que a tela abre
+  useEffect(() => {
+    findImage();
+  }, [attempts]);
 
   return (
     <section id="about" className="py-16 bg-white overflow-hidden">
@@ -15,24 +64,31 @@ const AboutMe: React.FC = () => {
         <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
           
           {/* Foto da Nutri */}
-          <div className="relative mb-10 lg:mb-0 flex justify-center">
-            <div className="w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden shadow-2xl border-4 border-sky-100 bg-sky-50 flex items-center justify-center relative">
+          <div className="relative mb-10 lg:mb-0 flex flex-col items-center">
+            <div className="w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden shadow-2xl border-4 border-sky-100 bg-sky-50 flex items-center justify-center relative group">
               
-              {!imgError ? (
+              {currentImage ? (
                 <img 
-                  src={profileImage}
+                  src={currentImage}
                   alt="Vanessa Schmidt Nutricionista" 
-                  className="object-cover object-center w-full h-full"
-                  onError={() => setImgError(true)}
+                  className="object-cover object-center w-full h-full transition-transform duration-500 hover:scale-105"
                 />
               ) : (
                 /* Ícone Neutro se a foto não for encontrada */
-                <div className="flex flex-col items-center justify-center text-sky-300 w-full h-full bg-sky-50">
-                  <UserRound className="h-32 w-32 opacity-50" />
-                  <p className="text-xs text-sky-400 mt-2 px-4 text-center font-medium">
-                    Aguardando foto...<br/>
-                    (Verifique se o arquivo no GitHub se chama exatamente "vanessa.jpg")
+                <div className="flex flex-col items-center justify-center text-sky-300 w-full h-full bg-sky-50 p-6 text-center animate-pulse">
+                   {loading ? (
+                     <RefreshCw className="h-16 w-16 animate-spin mb-2" />
+                   ) : (
+                     <UserRound className="h-32 w-32 opacity-50 mb-2" />
+                   )}
+                  <p className="text-xs text-sky-500 font-bold">
+                    {loading ? "Procurando sua foto..." : "Aguardando Foto"}
                   </p>
+                  {!loading && (
+                    <p className="text-[10px] text-sky-400 mt-1">
+                      Salve sua foto no GitHub com o nome <b>vanessa.jpg</b>
+                    </p>
+                  )}
                 </div>
               )}
 
@@ -48,6 +104,16 @@ const AboutMe: React.FC = () => {
                 </a>
               </div>
             </div>
+
+            {/* Botão de Forçar Atualização (Útil se a pessoa acabou de subir a foto) */}
+            <button 
+              onClick={() => setAttempts(a => a + 1)}
+              className="mt-4 flex items-center text-xs text-gray-400 hover:text-sky-600 transition-colors"
+              title="Clique aqui se você acabou de subir a foto"
+            >
+              <RefreshCw className={`h-3 w-3 mr-1 ${loading ? 'animate-spin' : ''}`} />
+              Atualizar foto
+            </button>
           </div>
 
           {/* Conteúdo de Texto */}
