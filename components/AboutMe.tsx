@@ -1,73 +1,37 @@
-import React, { useState, useRef } from 'react';
-import { Instagram, Globe, MapPin, Camera, Upload } from 'lucide-react';
+import React, { useState } from 'react';
+import { Instagram, Globe, MapPin, UserRound } from 'lucide-react';
 
 const AboutMe: React.FC = () => {
-  const [imageSrc, setImageSrc] = useState<string>('/vanessa.jpg');
-  const [hasError, setHasError] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setImageSrc(imageUrl);
-      setHasError(false);
-    }
-  };
-
-  const handleImageError = () => {
-    setHasError(true);
-  };
-
-  const triggerFileInput = () => {
-    fileInputRef.current?.click();
-  };
+  // Estado para controlar o erro da imagem
+  const [imgError, setImgError] = useState(false);
 
   return (
     <section id="about" className="py-16 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
           
-          {/* Foto da Nutri com Upload - Agora Circular e Centralizada */}
-          <div className="relative mb-10 lg:mb-0 group cursor-pointer flex justify-center" onClick={triggerFileInput}>
-            <div className={`w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden shadow-2xl border-4 border-sky-100 ${hasError ? 'bg-sky-50 border-dashed border-sky-300' : 'bg-sky-100'}`}>
+          {/* Foto da Nutri */}
+          <div className="relative mb-10 lg:mb-0 flex justify-center">
+            <div className="w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden shadow-2xl border-4 border-sky-100 bg-sky-50 flex items-center justify-center relative">
               
-              <input 
-                type="file" 
-                ref={fileInputRef} 
-                onChange={handleImageUpload} 
-                className="hidden" 
-                accept="image/*"
-              />
-
-              {!hasError ? (
-                <>
-                  <img 
-                    src={imageSrc} 
-                    alt="Vanessa Schmidt Nutricionista" 
-                    className="object-cover object-center w-full h-full transform group-hover:scale-105 transition-transform duration-500"
-                    onError={handleImageError}
-                  />
-                  {/* Overlay de Edição ao passar o mouse */}
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center rounded-full">
-                    <div className="opacity-0 group-hover:opacity-100 text-white flex flex-col items-center font-medium transition-opacity duration-300">
-                      <Camera className="h-10 w-10 mb-2" />
-                      <span>Trocar Foto</span>
-                    </div>
-                  </div>
-                </>
+              {!imgError ? (
+                <img 
+                  src="/vanessa.jpg"
+                  alt="Vanessa Schmidt Nutricionista" 
+                  className="object-cover object-center w-full h-full"
+                  onError={() => setImgError(true)}
+                />
               ) : (
-                <div className="flex flex-col items-center justify-center h-full w-full text-sky-600 p-8 text-center">
-                  <div className="bg-sky-100 p-4 rounded-full mb-4">
-                    <Upload className="h-8 w-8" />
-                  </div>
-                  <h4 className="text-lg font-bold mb-2">Clique para adicionar sua foto</h4>
-                  <p className="text-sm text-sky-500">Selecione o arquivo no seu dispositivo</p>
+                /* Ícone Neutro se a foto não for encontrada */
+                <div className="flex flex-col items-center justify-center text-sky-300 w-full h-full bg-sky-50">
+                  <UserRound className="h-32 w-32 opacity-50" />
+                  <p className="text-xs text-sky-400 mt-2 px-4 text-center font-medium">
+                    Aguardando foto (vanessa.jpg)
+                  </p>
                 </div>
               )}
-            </div>
 
-            {!hasError && (
+              {/* Ícone flutuante do Instagram */}
               <div className="absolute -bottom-2 right-1/4 bg-white p-3 rounded-full shadow-xl border border-sky-100 hidden md:block z-10">
                  <a 
                     href="https://www.instagram.com/nessahnutri/"
@@ -78,13 +42,13 @@ const AboutMe: React.FC = () => {
                   <Instagram className="h-6 w-6" />
                 </a>
               </div>
-            )}
+            </div>
           </div>
 
           {/* Conteúdo de Texto */}
           <div className="text-center lg:text-left">
             <h2 className="text-base text-sky-600 font-semibold tracking-wide uppercase">Sobre Mim</h2>
-            <h3 className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+            <h3 className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl font-serif-elegant">
               Vanessa Schmidt
             </h3>
             <p className="mt-4 text-lg text-gray-500">
