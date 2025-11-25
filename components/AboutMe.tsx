@@ -5,6 +5,10 @@ const AboutMe: React.FC = () => {
   // Estado para controlar o erro da imagem
   const [imgError, setImgError] = useState(false);
 
+  // Link direto para a imagem no GitHub (Raw)
+  // Adicionei ?v=1 para garantir que o navegador não use uma versão antiga (cache)
+  const profileImage = "https://raw.githubusercontent.com/nesschmidt-star/Site-Vanessa/main/vanessa.jpg?v=1";
+
   return (
     <section id="about" className="py-16 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,7 +20,7 @@ const AboutMe: React.FC = () => {
               
               {!imgError ? (
                 <img 
-                  src="/vanessa.jpg"
+                  src={profileImage}
                   alt="Vanessa Schmidt Nutricionista" 
                   className="object-cover object-center w-full h-full"
                   onError={() => setImgError(true)}
@@ -26,7 +30,8 @@ const AboutMe: React.FC = () => {
                 <div className="flex flex-col items-center justify-center text-sky-300 w-full h-full bg-sky-50">
                   <UserRound className="h-32 w-32 opacity-50" />
                   <p className="text-xs text-sky-400 mt-2 px-4 text-center font-medium">
-                    Aguardando foto (vanessa.jpg)
+                    Aguardando foto...<br/>
+                    (Verifique se o arquivo no GitHub se chama exatamente "vanessa.jpg")
                   </p>
                 </div>
               )}

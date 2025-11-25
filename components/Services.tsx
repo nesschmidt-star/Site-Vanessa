@@ -18,7 +18,7 @@ const Services: React.FC = () => {
       title: "Controle do Diabetes",
       subtitle: "Tipo 1, 2 e Gestacional",
       description: "Estratégias para controle glicêmico eficiente, prevenindo complicações e permitindo uma vida leve e saborosa.",
-      image: "https://images.unsplash.com/photo-1631553128785-5cb6175f4188?auto=format&fit=crop&q=80&w=800",
+      image: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?auto=format&fit=crop&q=80&w=800",
     },
     {
       title: "Saúde da Tireoide",
