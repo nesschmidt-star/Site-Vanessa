@@ -5,9 +5,11 @@ import Hero from './components/Hero';
 import AboutMe from './components/AboutMe';
 import Services from './components/Services';
 import Locations from './components/Locations';
+import InsuranceInfo from './components/InsuranceInfo';
 import BMICalculator from './components/BMICalculator';
 import WhatsAppButton from './components/WhatsAppButton';
 import Testimonials from './components/Testimonials';
+import CtaSection from './components/CtaSection';
 
 const App: React.FC = () => {
   return (
@@ -19,7 +21,9 @@ const App: React.FC = () => {
         <Services />
         <Testimonials />
         <Locations />
+        <InsuranceInfo />
         <BMICalculator />
+        <CtaSection />
       </main>
       <WhatsAppButton />
       <footer className="bg-gray-900 text-white py-12">

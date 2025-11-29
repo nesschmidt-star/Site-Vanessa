@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Activity } from 'lucide-react';
 
@@ -28,12 +29,11 @@ const BMICalculator: React.FC = () => {
   return (
     <section id="calculator" className="py-16 bg-sky-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="lg:text-center mb-12">
-          <h2 className="text-base text-sky-600 font-semibold tracking-wide uppercase">Ferramentas</h2>
+        <div className="text-center mb-12">
           <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
             Calculadora de IMC
           </p>
-          <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+          <p className="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
             Verifique rapidamente seu Índice de Massa Corporal para entender melhor sua saúde atual.
           </p>
         </div>
