@@ -7,6 +7,7 @@ import Services from './components/Services';
 import Locations from './components/Locations';
 import BMICalculator from './components/BMICalculator';
 import WhatsAppButton from './components/WhatsAppButton';
+import Testimonials from './components/Testimonials';
 
 const App: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const App: React.FC = () => {
       <main className="flex flex-col w-full">
         <AboutMe />
         <Services />
+        <Testimonials />
         <Locations />
         <BMICalculator />
       </main>
@@ -34,6 +36,7 @@ const App: React.FC = () => {
               <li><a href="#home" className="hover:text-white transition-colors">Início</a></li>
               <li><a href="#about" className="hover:text-white transition-colors">Sobre Mim</a></li>
               <li><a href="#services" className="hover:text-white transition-colors">Serviços</a></li>
+              <li><a href="#testimonials" className="hover:text-white transition-colors">Depoimentos</a></li>
               <li><a href="#locations" className="hover:text-white transition-colors">Locais de Atendimento</a></li>
               <li><a href="#calculator" className="hover:text-white transition-colors">Calculadora IMC</a></li>
             </ul>
