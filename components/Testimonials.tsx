@@ -1,5 +1,6 @@
-import React from 'react';
-import { Star } from 'lucide-react';
+
+import React, { useState } from 'react';
+import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 
 interface Review {
   name: string;
@@ -11,16 +12,28 @@ interface Review {
 const Testimonials: React.FC = () => {
   const reviews: Review[] = [
     {
-      name: "Jacqueline de Paula Almeida",
-      time: "2 anos atrás",
-      text: "Bom dia Vanessa. Estou muito feliz com o seu modo de trabalho e já estou vendo resultados. Como você não restringiu tudo da minha dieta eu estou conseguindo seguir e como eu sei que posso comer o açaí e chocolate, não estou tendo vontade, não é fantástico. É claro que o tratamento que eu iniciei para ansiedade também está fazendo toda a diferença na minha compulsão alimentar. Eu já emagreci 1 kg 😍. Nao vou ficar mais pesando, para não gerar ansiedade, mas já consegui sair do ciclo de engordar 😍 Muito obrigada, por me incentivar e por ser tão atenciosa e profissional.",
-      image: "https://randomuser.me/api/portraits/women/44.jpg"
-    },
-    {
       name: "Gisele Araujo",
       time: "4 avaliações",
       text: "Vanessa tem sido além de uma excelente profissional, é uma pessoa muito atenciosa. Tem me ajudado muito nessa luta contra a balança, suas orientações personalizadas e adequadas a minha rotina, estão fazendo com que o processo seja menos pesado e mais fácil de lhe dar, sem sofrimento. Obrigada Vanessa, vc está fazendo a diferença em minha qualidade de vida!",
       image: "https://randomuser.me/api/portraits/women/68.jpg"
+    },
+    {
+      name: "Esau Marques",
+      time: "3 avaliações",
+      text: "Trata-se de uma profissional exemplar. Atendeu as minhas necessidades individuais e me incentivou a continuar cuidando da minha saúde.",
+      image: "https://randomuser.me/api/portraits/men/45.jpg"
+    },
+    {
+      name: "Carolina Penna",
+      time: "Local Guide",
+      text: "Excelente profissional! Muito atenciosa e competente. O plano alimentar é super tranquilo de seguir.",
+      image: "https://randomuser.me/api/portraits/women/12.jpg"
+    },
+    {
+      name: "Jacqueline de Paula Almeida",
+      time: "2 anos atrás",
+      text: "Bom dia Vanessa. Estou muito feliz com o seu modo de trabalho e já estou vendo resultados. Como você não restringiu tudo da minha dieta eu estou conseguindo seguir e como eu sei que posso comer o açaí e chocolate, não estou tendo vontade, não é fantástico. É claro que o tratamento que eu iniciei para ansiedade também está fazendo toda a diferença na minha compulsão alimentar. Eu já emagreci 1 kg 😍. Nao vou ficar mais pesando, para não gerar ansiedade, mas já consegui sair do ciclo de engordar 😍 Muito obrigada, por me incentivar e por ser tão atenciosa e profissional.",
+      image: "https://randomuser.me/api/portraits/women/44.jpg"
     },
     {
       name: "Sylvia Rosenbloom",
@@ -57,20 +70,26 @@ const Testimonials: React.FC = () => {
       time: "Local Guide",
       text: "Vanessa foi uma grata surpresa proporcionada pelo Instagram. Profissional competente, é um amor de pessoa e muito empática. Diferencia-se dos demais, pois preocupa-se de fato com o bem estar do paciente e não somente com números na balança. Indico de olhos fechados!",
       image: "https://randomuser.me/api/portraits/men/32.jpg"
-    },
-    {
-      name: "Esau Marques",
-      time: "3 avaliações",
-      text: "Trata-se de uma profissional exemplar. Atendeu as minhas necessidades individuais e me incentivou a continuar cuidando da minha saúde.",
-      image: "https://randomuser.me/api/portraits/men/45.jpg"
-    },
-    {
-      name: "Carolina Penna",
-      time: "Local Guide",
-      text: "Excelente profissional! Muito atenciosa e competente. O plano alimentar é super tranquilo de seguir.",
-      image: "https://randomuser.me/api/portraits/women/12.jpg"
     }
   ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const prevSlide = () => {
+    const isFirstSlide = currentIndex === 0;
+    const newIndex = isFirstSlide ? reviews.length - 1 : currentIndex - 1;
+    setCurrentIndex(newIndex);
+  };
+
+  const nextSlide = () => {
+    const isLastSlide = currentIndex === reviews.length - 1;
+    const newIndex = isLastSlide ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+  };
+
+  const goToSlide = (slideIndex: number) => {
+    setCurrentIndex(slideIndex);
+  };
 
   return (
     <section id="testimonials" className="py-16 bg-white border-t border-gray-100">
@@ -92,43 +111,82 @@ const Testimonials: React.FC = () => {
           </div>
         </div>
 
-        {/* Masonry Grid Layout Simulator with columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {reviews.map((review, index) => (
-            <div key={index} className="bg-slate-50 p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow h-fit">
-              <div className="flex items-start mb-4">
-                <img 
-                  src={review.image} 
-                  alt={review.name} 
-                  className="w-12 h-12 rounded-full object-cover mr-4 border-2 border-white shadow-sm"
-                />
-                <div>
-                  <h4 className="font-bold text-gray-900 text-sm">{review.name}</h4>
-                  <div className="flex items-center mt-1">
-                    <div className="flex text-yellow-400 mr-2">
-                      <Star className="h-3 w-3 fill-current" />
-                      <Star className="h-3 w-3 fill-current" />
-                      <Star className="h-3 w-3 fill-current" />
-                      <Star className="h-3 w-3 fill-current" />
-                      <Star className="h-3 w-3 fill-current" />
-                    </div>
-                    <span className="text-xs text-gray-400">{review.time}</span>
+        {/* Carousel Container */}
+        <div className="max-w-4xl mx-auto relative group">
+          
+          {/* Card Central */}
+          <div className="bg-slate-50 p-8 md:p-10 rounded-2xl shadow-lg border border-gray-100 transition-all duration-500 ease-in-out min-h-[300px] flex flex-col justify-center relative mx-6 md:mx-0">
+            
+            {/* Ícone de Citação Decorativo */}
+            <div className="absolute top-6 right-8 text-sky-100">
+               <Quote className="h-20 w-20 opacity-50 transform rotate-12" />
+            </div>
+
+            <div className="flex flex-col md:flex-row items-center md:items-start mb-6 relative z-10">
+              <img 
+                src={reviews[currentIndex].image} 
+                alt={reviews[currentIndex].name} 
+                className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-md mb-4 md:mb-0 md:mr-6"
+              />
+              <div className="text-center md:text-left">
+                <h4 className="font-bold text-gray-900 text-lg">{reviews[currentIndex].name}</h4>
+                <div className="flex items-center justify-center md:justify-start mt-2">
+                  <div className="flex text-yellow-400 mr-2">
+                    <Star className="h-4 w-4 fill-current" />
+                    <Star className="h-4 w-4 fill-current" />
+                    <Star className="h-4 w-4 fill-current" />
+                    <Star className="h-4 w-4 fill-current" />
+                    <Star className="h-4 w-4 fill-current" />
                   </div>
+                  <span className="text-sm text-gray-500">{reviews[currentIndex].time}</span>
                 </div>
               </div>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                "{review.text}"
+            </div>
+            
+            <div className="relative z-10">
+              <p className="text-gray-700 text-lg leading-relaxed text-center md:text-left italic">
+                "{reviews[currentIndex].text}"
               </p>
             </div>
-          ))}
+          </div>
+
+          {/* Seta Esquerda (Anterior) */}
+          <button
+            onClick={prevSlide}
+            className="absolute top-1/2 -translate-y-1/2 -left-4 md:-left-16 z-20 p-3 rounded-full bg-white text-sky-600 shadow-lg hover:bg-sky-50 transition-all border border-gray-100 focus:outline-none focus:ring-2 focus:ring-sky-500"
+            aria-label="Depoimento Anterior"
+          >
+            <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
+          </button>
+
+          {/* Seta Direita (Próximo) */}
+          <button
+            onClick={nextSlide}
+            className="absolute top-1/2 -translate-y-1/2 -right-4 md:-right-16 z-20 p-3 rounded-full bg-white text-sky-600 shadow-lg hover:bg-sky-50 transition-all border border-gray-100 focus:outline-none focus:ring-2 focus:ring-sky-500"
+            aria-label="Próximo Depoimento"
+          >
+            <ChevronRight className="w-6 h-6 md:w-8 md:h-8" />
+          </button>
+
+          {/* Dots Indicators */}
+          <div className="flex justify-center py-6 space-x-2">
+            {reviews.map((_, slideIndex) => (
+              <div
+                key={slideIndex}
+                onClick={() => goToSlide(slideIndex)}
+                className={`transition-all duration-300 cursor-pointer rounded-full ${currentIndex === slideIndex ? "p-1.5 bg-sky-600 w-4" : "p-1.5 bg-gray-300 w-1.5 hover:bg-sky-300"}`}
+              ></div>
+            ))}
+          </div>
+
         </div>
         
-        <div className="mt-10 text-center">
+        <div className="mt-8 text-center">
           <a 
             href="https://www.google.com/search?q=vanessa+schmidt+nutricionista" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-sky-600 font-medium hover:text-sky-800 underline"
+            className="text-sky-600 font-medium hover:text-sky-800 underline transition-colors"
           >
             Ver mais avaliações no Google
           </a>
