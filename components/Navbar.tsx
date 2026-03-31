@@ -53,6 +53,7 @@ const Navbar: React.FC = () => {
               <a href="#services" className="text-gray-500 hover:text-sky-600 px-2 py-2 rounded-md text-sm font-medium transition-colors">Serviços</a>
               <a href="#testimonials" className="text-gray-500 hover:text-sky-600 px-2 py-2 rounded-md text-sm font-medium transition-colors">Depoimentos</a>
               <a href="#locations" className="text-gray-500 hover:text-sky-600 px-2 py-2 rounded-md text-sm font-medium transition-colors">Locais</a>
+              <a href="#social-value" className="text-gray-500 hover:text-sky-600 px-2 py-2 rounded-md text-sm font-medium transition-colors">Valor Social</a>
               <a href="#calculator" className="text-gray-500 hover:text-sky-600 px-2 py-2 rounded-md text-sm font-medium transition-colors">IMC</a>
             </div>
           </div>
@@ -92,6 +93,7 @@ const Navbar: React.FC = () => {
             <a href="#services" onClick={() => setIsOpen(false)} className="text-gray-600 hover:text-sky-600 block px-3 py-2 rounded-md text-base font-medium">Serviços</a>
             <a href="#testimonials" onClick={() => setIsOpen(false)} className="text-gray-600 hover:text-sky-600 block px-3 py-2 rounded-md text-base font-medium">Depoimentos</a>
             <a href="#locations" onClick={() => setIsOpen(false)} className="text-gray-600 hover:text-sky-600 block px-3 py-2 rounded-md text-base font-medium">Locais</a>
+            <a href="#social-value" onClick={() => setIsOpen(false)} className="text-gray-600 hover:text-sky-600 block px-3 py-2 rounded-md text-base font-medium">Valor Social</a>
             <a href="#calculator" onClick={() => setIsOpen(false)} className="text-gray-600 hover:text-sky-600 block px-3 py-2 rounded-md text-base font-medium">IMC</a>
             <a href="https://www.instagram.com/nessahnutri/" target="_blank" rel="noopener noreferrer" className="text-sky-600 hover:text-sky-700 block px-3 py-2 rounded-md text-base font-medium flex items-center bg-sky-50 mt-2">
               <Instagram className="h-5 w-5 mr-2" /> Siga no Instagram

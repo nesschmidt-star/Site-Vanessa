@@ -6,6 +6,7 @@ import AboutMe from './components/AboutMe';
 import Services from './components/Services';
 import Locations from './components/Locations';
 import InsuranceInfo from './components/InsuranceInfo';
+import SocialConsultation from './components/SocialConsultation';
 import BMICalculator from './components/BMICalculator';
 import WhatsAppButton from './components/WhatsAppButton';
 import Testimonials from './components/Testimonials';
@@ -22,6 +23,7 @@ const App: React.FC = () => {
         <Testimonials />
         <Locations />
         <InsuranceInfo />
+        <SocialConsultation />
         <BMICalculator />
         <CtaSection />
       </main>
@@ -42,6 +44,7 @@ const App: React.FC = () => {
               <li><a href="#services" className="hover:text-white transition-colors">Serviços</a></li>
               <li><a href="#testimonials" className="hover:text-white transition-colors">Depoimentos</a></li>
               <li><a href="#locations" className="hover:text-white transition-colors">Locais de Atendimento</a></li>
+              <li><a href="#social-value" className="hover:text-white transition-colors">Valor Social</a></li>
               <li><a href="#calculator" className="hover:text-white transition-colors">Calculadora IMC</a></li>
             </ul>
           </div>
