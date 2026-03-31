@@ -13,6 +13,9 @@ const CtaSection: React.FC = () => {
       </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <span className="inline-block px-4 py-1 rounded-full bg-white/20 text-white text-sm font-semibold uppercase tracking-wider mb-4 animate-pulse">
+          Emagreça com estratégia, sem dietas restritivas e com acompanhamento real
+        </span>
         <h2 className="text-3xl font-extrabold text-white sm:text-4xl md:text-5xl font-serif-elegant mb-6">
           Não deixe sua saúde para depois
         </h2>

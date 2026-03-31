@@ -12,6 +12,9 @@ const Hero: React.FC = () => {
                 <span className="block xl:inline">Sua saúde transformada</span>{' '}
                 <span className="block text-sky-600 xl:inline">com Vanessa Schmidt</span>
               </h1>
+              <p className="mt-4 text-lg font-medium text-sky-700 sm:text-xl md:text-2xl italic">
+                “Emagreça com estratégia, sem dietas restritivas e com acompanhamento real”
+              </p>
               <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
                 Nutrição humanizada e inteligente. Receba planos alimentares personalizados, tire dúvidas e agende sua consulta online ou presencial em Belo Horizonte.
               </p>
