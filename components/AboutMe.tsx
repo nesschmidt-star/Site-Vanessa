@@ -10,9 +10,10 @@ const AboutMe: React.FC = () => {
   // Lista de tentativas de nomes de arquivo (O código vai testar um por um)
   const baseUrl = "https://raw.githubusercontent.com/nesschmidt-star/Site-Vanessa/main/";
   const possibleNames = [
-    "vanessa.jpg",      // Padrão
+    "/vanessa.jpeg",    // Arquivo local enviado pelo usuário
+    "vanessa.jpeg",     // Tentativa relativa
+    "vanessa.jpg",      // Padrão GitHub
     "Vanessa.jpg",      // Com maiúscula
-    "vanessa.jpeg",     // Formato jpeg
     "Vanessa.jpeg",     // Jpeg com maiúscula
     "vanessa.png",      // Formato png
     "vanessa.jpg.jpg",  // Erro comum do Windows
@@ -35,7 +36,8 @@ const AboutMe: React.FC = () => {
       }
 
       const img = new Image();
-      const urlToTest = `${baseUrl}${possibleNames[index]}?t=${timestamp}`;
+      const isLocal = possibleNames[index].startsWith("/");
+      const urlToTest = isLocal ? possibleNames[index] : `${baseUrl}${possibleNames[index]}?t=${timestamp}`;
       
       img.onload = () => {
         setCurrentImage(urlToTest);

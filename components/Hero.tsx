@@ -36,14 +36,17 @@ const Hero: React.FC = () => {
         </div>
       </div>
       <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 flex items-center justify-center bg-sky-100">
-        {/* Placeholder for a nice hero image */}
         <div className="relative h-56 w-full sm:h-72 md:h-96 lg:h-full bg-sky-200 flex items-center justify-center overflow-hidden">
            <img 
-             src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?q=80&w=1932&auto=format&fit=crop" 
-             alt="Alimentação Saudável" 
-             className="absolute w-full h-full object-cover opacity-60 mix-blend-multiply"
+             src="/vanessa.jpeg" 
+             alt="Vanessa Schmidt" 
+             className="absolute w-full h-full object-cover"
+             onError={(e) => {
+               // Fallback if image is not found
+               e.currentTarget.src = "https://images.unsplash.com/photo-1490818387583-1baba5e638af?q=80&w=1932&auto=format&fit=crop";
+               e.currentTarget.className = "absolute w-full h-full object-cover opacity-60 mix-blend-multiply";
+             }}
            />
-           <Salad className="h-32 w-32 text-sky-600 relative z-10 animate-pulse" />
         </div>
       </div>
     </div>
