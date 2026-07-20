@@ -2,7 +2,7 @@ import React from 'react';
 import { MessageCircle } from 'lucide-react';
 
 const InsuranceInfo: React.FC = () => {
-  const whatsappLink = "https://wa.me/553182228501?text=Ola%20Vanessa,%20gostaria%20de%20saber%20mais%20sobre%20os%20valores%20para%20quem%20tem%20plano%20de%20saude";
+  const whatsappLink = "https://api.whatsapp.com/send/?phone=553182228501&text=Ola+Vanessa%2C+gostaria+de+saber+mais+sobre+os+valores+para+quem+tem+plano+de+saude&type=phone_number&app_absent=0";
 
   return (
     <section className="bg-white pb-16 pt-6">

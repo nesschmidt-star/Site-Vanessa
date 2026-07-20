@@ -2,7 +2,7 @@ import React from 'react';
 import { Heart, MessageCircle } from 'lucide-react';
 
 const SocialConsultation: React.FC = () => {
-  const whatsappLink = "https://wa.me/553182228501?text=Ola%20Vanessa,%20gostaria%20de%20saber%20mais%20sobre%20a%20consulta%20com%20valor%20social";
+  const whatsappLink = "https://api.whatsapp.com/send/?phone=553182228501&text=Ola+Vanessa%2C+gostaria+de+saber+mais+sobre+os+valores+para+quem+tem+plano+de+saude&type=phone_number&app_absent=0";
 
   return (
     <section id="social-value" className="bg-white pb-12 pt-4">

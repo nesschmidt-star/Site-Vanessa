@@ -31,7 +31,9 @@ const AboutMe: React.FC = () => {
     // Tenta carregar a primeira imagem que funcionar
     const tryNextImage = (index: number) => {
       if (index >= possibleNames.length) {
-        setLoading(false); // Nenhuma funcionou
+        // Nenhuma funcionou - define um fallback profissional de alta qualidade
+        setCurrentImage("https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=1000&auto=format&fit=crop");
+        setLoading(false);
         return;
       }
 
@@ -151,7 +153,7 @@ const AboutMe: React.FC = () => {
 
             <div className="mt-8 flex justify-center lg:justify-start">
               <a 
-                href="https://nessahnutri.taplink.ws/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGn7JBiKicL7OhpE_UcYHfU3pDJrO-ay8lPwu-py6F3NXN5JkMnf-1VMAptYGU_aem_q9b280lw_vZ8z0lDJSD6-A" 
+                href="https://api.whatsapp.com/send/?phone=553182228501&text=Ola+Vanessa%2C+gostaria+de+saber+mais+sobre+os+valores+para+quem+tem+plano+de+saude&type=phone_number&app_absent=0" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 transition-colors shadow-lg"
