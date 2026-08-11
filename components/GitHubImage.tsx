@@ -15,20 +15,21 @@ export const GitHubImage: React.FC<GitHubImageProps> = ({
 }) => {
   const repoBase = "https://raw.githubusercontent.com/nesschmidt-star/Site-Vanessa/main/";
 
-  // Prioritized extensions to test
-  const candidateUrls = [
-    `${repoBase}${baseName}.jpg`,
-    `${repoBase}${baseName}.jpeg`,
-    `${repoBase}${baseName}.png`,
-    `${repoBase}${baseName}.webp`,
-    `${repoBase}${baseName}.JPG`,
-    `${repoBase}${baseName}.JPEG`,
-    `${repoBase}${baseName}.PNG`,
-    `${repoBase}${baseName}`,
-    `/${baseName}.jpeg`,
-    `/${baseName}.jpg`,
-    fallbackUrl
-  ];
+  // Folders to try on GitHub
+  const folders = ["images/", "fotos/", "assets/", "img/", "public/", ""];
+  const exts = [".jpg", ".jpeg", ".png", ".webp", ".JPG", ".JPEG", ".PNG", ""];
+
+  // Generate candidate URLs across all folder structures and extensions
+  const candidateUrls: string[] = [];
+
+  folders.forEach(folder => {
+    exts.forEach(ext => {
+      candidateUrls.push(`${repoBase}${folder}${baseName}${ext}`);
+    });
+  });
+
+  // Local fallbacks
+  candidateUrls.push(`/${baseName}.jpeg`, `/${baseName}.jpg`, fallbackUrl);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
