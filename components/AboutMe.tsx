@@ -1,11 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { Instagram, Globe, MapPin, UserRound, RefreshCw } from 'lucide-react';
+import { Instagram, Globe, MapPin, UserRound, RefreshCw, Upload, Image as ImageIcon } from 'lucide-react';
+import { getStoredPhoto, saveStoredPhoto, subscribePhotoChanges } from '../services/photoStorage';
 
 const AboutMe: React.FC = () => {
   // Estado para controlar qual imagem exibir
-  const [currentImage, setCurrentImage] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [currentImage, setCurrentImage] = useState<string | null>(getStoredPhoto());
+  const [loading, setLoading] = useState(!getStoredPhoto());
   const [attempts, setAttempts] = useState(0);
+
+  // Inscreve para alterações de foto
+  useEffect(() => {
+    const unsubscribe = subscribePhotoChanges((photo) => {
+      if (photo) {
+        setCurrentImage(photo);
+        setLoading(false);
+      }
+    });
+    return unsubscribe;
+  }, []);
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (typeof reader.result === 'string') {
+          saveStoredPhoto(reader.result);
+          setCurrentImage(reader.result);
+          setLoading(false);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   // Lista de tentativas de nomes de arquivo (O código vai testar um por um)
   const baseUrl = "https://raw.githubusercontent.com/nesschmidt-star/Site-Vanessa/main/";
@@ -29,6 +56,13 @@ const AboutMe: React.FC = () => {
 
   // Função que testa as imagens
   const findImage = () => {
+    const stored = getStoredPhoto();
+    if (stored) {
+      setCurrentImage(stored);
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     let found = false;
     
@@ -122,6 +156,20 @@ const AboutMe: React.FC = () => {
                   <Instagram className="h-6 w-6" />
                 </a>
               </div>
+            </div>
+
+            {/* Botão para upload direto da foto */}
+            <div className="mt-4 flex flex-col items-center space-y-2 z-10">
+              <label className="cursor-pointer inline-flex items-center space-x-2 bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 text-xs px-4 py-2 rounded-full font-medium transition-all shadow-sm">
+                <Upload className="w-4 h-4 text-sky-600" />
+                <span>Enviar foto do seu computador / celular</span>
+                <input 
+                  type="file" 
+                  accept="image/*" 
+                  className="hidden" 
+                  onChange={handleFileUpload}
+                />
+              </label>
             </div>
           </div>
 
