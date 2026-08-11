@@ -10,14 +10,21 @@ const AboutMe: React.FC = () => {
   // Lista de tentativas de nomes de arquivo (O código vai testar um por um)
   const baseUrl = "https://raw.githubusercontent.com/nesschmidt-star/Site-Vanessa/main/";
   const possibleNames = [
-    "/vanessa.jpeg",    // Arquivo local enviado pelo usuário
-    "vanessa.jpeg",     // Tentativa relativa
-    "vanessa.jpg",      // Padrão GitHub
-    "Vanessa.jpg",      // Com maiúscula
-    "Vanessa.jpeg",     // Jpeg com maiúscula
-    "vanessa.png",      // Formato png
-    "vanessa.jpg.jpg",  // Erro comum do Windows
-    "foto.jpg"          // Nome genérico
+    "vanessanutri.jpg",     // Padrão solicitado vanessanutri
+    "vanessanutri.jpeg",    // Formato jpeg
+    "vanessanutri.png",     // Formato png
+    "/vanessanutri.jpeg",   // Arquivo local
+    "/vanessanutri.jpg",    // Arquivo local
+    "vanessanutri.JPG",     // Maiúsculas
+    "vanessanutri.JPEG",    
+    "vanessanutri",         // Sem extensão no github
+    "/vanessa.jpeg",        // Fallbacks anteriores
+    "vanessa.jpeg",     
+    "vanessa.jpg",      
+    "Vanessa.jpg",      
+    "Vanessa.jpeg",     
+    "vanessa.png",      
+    "foto.jpg"          
   ];
 
   // Função que testa as imagens
@@ -89,9 +96,17 @@ const AboutMe: React.FC = () => {
                     {loading ? "Procurando sua foto..." : "Aguardando Foto"}
                   </p>
                   {!loading && (
-                    <p className="text-[10px] text-sky-400 mt-1">
-                      Salve sua foto no GitHub com o nome <b>vanessa.jpg</b>
-                    </p>
+                    <div className="mt-1 space-y-1">
+                      <p className="text-[11px] text-sky-600 font-medium">
+                        Salve sua foto no GitHub com o nome:
+                      </p>
+                      <p className="text-xs text-sky-800 font-bold bg-sky-100/80 px-2 py-0.5 rounded border border-sky-200">
+                        vanessanutri.jpg
+                      </p>
+                      <p className="text-[10px] text-sky-500">
+                        (ou vanessanutri.jpeg)
+                      </p>
+                    </div>
                   )}
                 </div>
               )}

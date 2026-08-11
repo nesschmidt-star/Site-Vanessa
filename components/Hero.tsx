@@ -72,10 +72,24 @@ const Hero: React.FC = () => {
               {/* Main Image frame */}
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white aspect-[4/3] lg:aspect-square">
                 <img 
-                  src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop" 
-                  alt="Alimentação Saudável" 
+                  src="https://raw.githubusercontent.com/nesschmidt-star/Site-Vanessa/main/vanessanutri.jpg" 
+                  alt="Vanessa Schmidt Nutricionista" 
                   className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                   referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (target.src.includes('vanessanutri.jpg')) {
+                      target.src = 'https://raw.githubusercontent.com/nesschmidt-star/Site-Vanessa/main/vanessanutri.jpeg';
+                    } else if (target.src.includes('vanessanutri.jpeg')) {
+                      target.src = '/vanessanutri.jpeg';
+                    } else if (target.src.endsWith('/vanessanutri.jpeg')) {
+                      target.src = '/vanessanutri.jpg';
+                    } else if (target.src.endsWith('/vanessanutri.jpg')) {
+                      target.src = '/vanessa.jpeg';
+                    } else if (!target.src.includes('unsplash.com')) {
+                      target.src = 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop';
+                    }
+                  }}
                 />
               </div>
               
