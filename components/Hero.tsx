@@ -1,19 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Calendar, Salad, CheckCircle2 } from 'lucide-react';
-import { getStoredPhoto, subscribePhotoChanges } from '../services/photoStorage';
+import GitHubImage from './GitHubImage';
 
 const Hero: React.FC = () => {
-  const [heroPhoto, setHeroPhoto] = useState<string | null>(getStoredPhoto());
-
-  useEffect(() => {
-    const unsubscribe = subscribePhotoChanges((photo) => {
-      setHeroPhoto(photo);
-    });
-    return unsubscribe;
-  }, []);
-
-  const defaultPhoto = "https://raw.githubusercontent.com/nesschmidt-star/Site-Vanessa/main/vanessanutri.jpg";
-  const displaySrc = heroPhoto || defaultPhoto;
   return (
     <div id="home" className="relative bg-gradient-to-br from-sky-50 via-emerald-50/30 to-white overflow-hidden py-16 lg:py-24">
       {/* Decorative background grid pattern */}
@@ -83,25 +72,11 @@ const Hero: React.FC = () => {
               
               {/* Main Image frame */}
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white aspect-[4/3] lg:aspect-square">
-                <img 
-                  src={displaySrc} 
+                <GitHubImage 
+                  baseName="vanessanutri" 
                   alt="Vanessa Schmidt Nutricionista" 
                   className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                  referrerPolicy="no-referrer"
-                  onError={(e) => {
-                    const target = e.currentTarget;
-                    if (target.src.includes('vanessanutri.jpg')) {
-                      target.src = 'https://raw.githubusercontent.com/nesschmidt-star/Site-Vanessa/main/vanessanutri.jpeg';
-                    } else if (target.src.includes('vanessanutri.jpeg')) {
-                      target.src = '/vanessanutri.jpeg';
-                    } else if (target.src.endsWith('/vanessanutri.jpeg')) {
-                      target.src = '/vanessanutri.jpg';
-                    } else if (target.src.endsWith('/vanessanutri.jpg')) {
-                      target.src = '/vanessa.jpeg';
-                    } else if (!target.src.includes('unsplash.com')) {
-                      target.src = 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop';
-                    }
-                  }}
+                  fallbackUrl="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop"
                 />
               </div>
               

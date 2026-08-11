@@ -1,179 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { Instagram, Globe, MapPin, UserRound, RefreshCw, Upload, Image as ImageIcon } from 'lucide-react';
-import { getStoredPhoto, saveStoredPhoto, subscribePhotoChanges } from '../services/photoStorage';
+import React from 'react';
+import { Instagram, Globe, MapPin } from 'lucide-react';
+import GitHubImage from './GitHubImage';
 
 const AboutMe: React.FC = () => {
-  // Estado para controlar qual imagem exibir
-  const [currentImage, setCurrentImage] = useState<string | null>(getStoredPhoto());
-  const [loading, setLoading] = useState(!getStoredPhoto());
-  const [attempts, setAttempts] = useState(0);
-
-  // Inscreve para alterações de foto
-  useEffect(() => {
-    const unsubscribe = subscribePhotoChanges((photo) => {
-      if (photo) {
-        setCurrentImage(photo);
-        setLoading(false);
-      }
-    });
-    return unsubscribe;
-  }, []);
-
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (typeof reader.result === 'string') {
-          saveStoredPhoto(reader.result);
-          setCurrentImage(reader.result);
-          setLoading(false);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  // Lista de tentativas de nomes de arquivo (O código vai testar um por um)
-  const baseUrl = "https://raw.githubusercontent.com/nesschmidt-star/Site-Vanessa/main/";
-  const possibleNames = [
-    "vanessanutri.jpg",     // Padrão solicitado vanessanutri
-    "vanessanutri.jpeg",    // Formato jpeg
-    "vanessanutri.png",     // Formato png
-    "/vanessanutri.jpeg",   // Arquivo local
-    "/vanessanutri.jpg",    // Arquivo local
-    "vanessanutri.JPG",     // Maiúsculas
-    "vanessanutri.JPEG",    
-    "vanessanutri",         // Sem extensão no github
-    "/vanessa.jpeg",        // Fallbacks anteriores
-    "vanessa.jpeg",     
-    "vanessa.jpg",      
-    "Vanessa.jpg",      
-    "Vanessa.jpeg",     
-    "vanessa.png",      
-    "foto.jpg"          
-  ];
-
-  // Função que testa as imagens
-  const findImage = () => {
-    const stored = getStoredPhoto();
-    if (stored) {
-      setCurrentImage(stored);
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);
-    let found = false;
-    
-    // Adiciona timestamp para evitar cache (?t=...)
-    const timestamp = new Date().getTime();
-
-    // Tenta carregar a primeira imagem que funcionar
-    const tryNextImage = (index: number) => {
-      if (index >= possibleNames.length) {
-        // Nenhuma funcionou - define um fallback profissional de alta qualidade
-        setCurrentImage("https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=1000&auto=format&fit=crop");
-        setLoading(false);
-        return;
-      }
-
-      const img = new Image();
-      const isLocal = possibleNames[index].startsWith("/");
-      const urlToTest = isLocal ? possibleNames[index] : `${baseUrl}${possibleNames[index]}?t=${timestamp}`;
-      
-      img.onload = () => {
-        setCurrentImage(urlToTest);
-        setLoading(false);
-        found = true;
-      };
-
-      img.onerror = () => {
-        if (!found) tryNextImage(index + 1);
-      };
-
-      img.src = urlToTest;
-    };
-
-    tryNextImage(0);
-  };
-
-  // Tenta buscar a imagem assim que a tela abre
-  useEffect(() => {
-    findImage();
-  }, [attempts]);
-
   return (
     <section id="about" className="py-16 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
           
-          {/* Foto da Nutri */}
+          {/* Foto Principal da Nutri (vanessanutri) */}
           <div className="relative mb-10 lg:mb-0 flex flex-col items-center">
             <div className="w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden shadow-2xl border-4 border-sky-100 bg-sky-50 flex items-center justify-center relative group">
-              
-              {currentImage ? (
-                <img 
-                  src={currentImage}
-                  alt="Vanessa Schmidt Nutricionista" 
-                  className="object-cover object-center w-full h-full transition-transform duration-500 hover:scale-105"
-                />
-              ) : (
-                /* Ícone Neutro se a foto não for encontrada */
-                <div className="flex flex-col items-center justify-center text-sky-300 w-full h-full bg-sky-50 p-6 text-center animate-pulse">
-                   {loading ? (
-                     <RefreshCw className="h-16 w-16 animate-spin mb-2" />
-                   ) : (
-                     <UserRound className="h-32 w-32 opacity-50 mb-2" />
-                   )}
-                  <p className="text-xs text-sky-500 font-bold">
-                    {loading ? "Procurando sua foto..." : "Aguardando Foto"}
-                  </p>
-                  {!loading && (
-                    <div className="mt-1 space-y-1">
-                      <p className="text-[11px] text-sky-600 font-medium">
-                        Salve sua foto no GitHub com o nome:
-                      </p>
-                      <p className="text-xs text-sky-800 font-bold bg-sky-100/80 px-2 py-0.5 rounded border border-sky-200">
-                        vanessanutri.jpg
-                      </p>
-                      <p className="text-[10px] text-sky-500">
-                        (ou vanessanutri.jpeg)
-                      </p>
-                    </div>
-                  )}
-                </div>
-              )}
+              <GitHubImage 
+                baseName="vanessanutri" 
+                alt="Vanessa Schmidt Nutricionista" 
+                className="object-cover object-center w-full h-full transition-transform duration-500 hover:scale-105"
+                fallbackUrl="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=1000&auto=format&fit=crop"
+              />
 
               {/* Ícone flutuante do Instagram */}
               <div className="absolute -bottom-2 right-1/4 bg-white p-3 rounded-full shadow-xl border border-sky-100 hidden md:block z-10">
-                 <a 
-                    href="https://www.instagram.com/nessahnutri/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center space-x-2 text-sky-600 hover:text-sky-700"
-                  >
+                <a 
+                  href="https://www.instagram.com/nessahnutri/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 text-sky-600 hover:text-sky-700"
+                >
                   <Instagram className="h-6 w-6" />
                 </a>
               </div>
             </div>
-
-            {/* Botão para upload direto da foto */}
-            <div className="mt-4 flex flex-col items-center space-y-2 z-10">
-              <label className="cursor-pointer inline-flex items-center space-x-2 bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 text-xs px-4 py-2 rounded-full font-medium transition-all shadow-sm">
-                <Upload className="w-4 h-4 text-sky-600" />
-                <span>Enviar foto do seu computador / celular</span>
-                <input 
-                  type="file" 
-                  accept="image/*" 
-                  className="hidden" 
-                  onChange={handleFileUpload}
-                />
-              </label>
-            </div>
+            <p className="mt-3 text-xs text-slate-400">
+              Foto sincronizada do GitHub: <span className="font-semibold text-sky-600">vanessanutri.jpg</span>
+            </p>
           </div>
 
-          {/* Conteúdo de Texto */}
+          {/* Conteúdo de Texto e Atendimento Online / Presencial */}
           <div className="text-center lg:text-left">
             <h2 className="text-base text-sky-600 font-semibold tracking-wide uppercase">Sobre Mim</h2>
             <h3 className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl font-serif-elegant">
@@ -184,33 +46,56 @@ const AboutMe: React.FC = () => {
               Meu objetivo é ajudar você a alcançar seus objetivos de saúde de forma leve, sem dietas restritivas e com muito sabor.
             </p>
             
-            <div className="mt-8 space-y-4">
-              <div className="flex items-start justify-center lg:justify-start">
-                <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center h-12 w-12 rounded-md bg-sky-500 text-white">
-                    <Globe className="h-6 w-6" />
+            {/* Bloco Atendimento Online e Presencial com Foto vanessanutri1 */}
+            <div className="mt-8 bg-sky-50/60 p-6 rounded-3xl border border-sky-100 shadow-sm">
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                
+                {/* Moldura da Segunda Foto (vanessanutri1) */}
+                <div className="relative w-full md:w-44 h-48 flex-shrink-0 rounded-2xl overflow-hidden shadow-md border-2 border-white bg-white group">
+                  <GitHubImage 
+                    baseName="vanessanutri1" 
+                    alt="Atendimento Online e Presencial Vanessa Schmidt" 
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    fallbackUrl="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=800&auto=format&fit=crop"
+                  />
+                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-900/80 to-transparent p-2 text-center">
+                    <span className="text-[10px] font-bold text-white tracking-wider uppercase">
+                      vanessanutri1
+                    </span>
                   </div>
                 </div>
-                <div className="ml-4 text-left">
-                  <h4 className="text-lg leading-6 font-medium text-gray-900">Atendimento Online</h4>
-                  <p className="mt-2 text-base text-gray-500">
-                    Consultas completas via videochamada para pacientes em qualquer lugar do mundo.
-                  </p>
-                </div>
-              </div>
 
-              <div className="flex items-start justify-center lg:justify-start">
-                <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center h-12 w-12 rounded-md bg-sky-500 text-white">
-                    <MapPin className="h-6 w-6" />
+                {/* Descrição dos Modalidades */}
+                <div className="space-y-4 flex-grow text-left">
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 mt-1">
+                      <div className="flex items-center justify-center h-9 w-9 rounded-lg bg-sky-500 text-white shadow-sm">
+                        <Globe className="h-5 w-5" />
+                      </div>
+                    </div>
+                    <div className="ml-3">
+                      <h4 className="text-base font-bold text-gray-900">Atendimento Online</h4>
+                      <p className="text-sm text-gray-600">
+                        Consultas via videochamada para pacientes no Brasil e exterior.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 mt-1">
+                      <div className="flex items-center justify-center h-9 w-9 rounded-lg bg-emerald-500 text-white shadow-sm">
+                        <MapPin className="h-5 w-5" />
+                      </div>
+                    </div>
+                    <div className="ml-3">
+                      <h4 className="text-base font-bold text-gray-900">Atendimento Presencial</h4>
+                      <p className="text-sm text-gray-600">
+                        Consultórios no Centro e Estrela do Oriente (Belo Horizonte - MG).
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div className="ml-4 text-left">
-                  <h4 className="text-lg leading-6 font-medium text-gray-900">Atendimento Presencial</h4>
-                  <p className="mt-2 text-base text-gray-500">
-                    Atendimento personalizado em dois endereços em Belo Horizonte: Centro e Estrela do Oriente.
-                  </p>
-                </div>
+
               </div>
             </div>
 
@@ -219,7 +104,7 @@ const AboutMe: React.FC = () => {
                 href="https://api.whatsapp.com/send/?phone=553182228501&text=Ola+Vanessa%2C+gostaria+de+saber+mais+sobre+os+valores+para+quem+tem+plano+de+saude&type=phone_number&app_absent=0" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 transition-colors shadow-lg"
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-sky-600 hover:bg-sky-700 transition-colors shadow-lg hover:shadow-sky-100"
               >
                 Agendar Consulta
               </a>
